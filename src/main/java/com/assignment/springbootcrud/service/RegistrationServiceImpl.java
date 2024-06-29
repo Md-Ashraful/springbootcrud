@@ -2,7 +2,9 @@ package com.assignment.springbootcrud.service;
 
 import com.assignment.springbootcrud.model.User;
 import com.assignment.springbootcrud.repo.UserRepository;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +14,28 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("No User found with id : " + userId));
     }
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        try {
+            var existingUser = userRepository.findByUserId(user.getUserId());
+            if (existingUser.isPresent()) {
+                throw new RuntimeException("User already exist");
+            }
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        } catch (DataException e) {
+            throw new RuntimeException("Failed to register the user");
+        }
+
     }
 
     @Override
