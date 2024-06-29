@@ -23,6 +23,12 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven {
+		url = uri("https://repo.spring.io/release")
+	}
+	maven {
+		url = uri("https://repository.jboss.org/maven2")
+	}
 }
 
 dependencies {
@@ -38,10 +44,18 @@ dependencies {
 //	implementation ("mysql:mysql-connector-java:8.0.33")
 	runtimeOnly("com.mysql:mysql-connector-j")
 //	runtimeOnly ("com.h2database:h2")
-	implementation( "io.springfox:springfox-boot-starter:3.0.0")
+//	implementation( "io.springfox:springfox-boot-starter:3.0.0")
+
+//	implementation("org.webjars:swagger-ui:5.17.14")
+
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.5.0")
+//	implementation("org.springdoc:springdoc-openapi-starter-webmvc-common:2.5.0")
+
 
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+

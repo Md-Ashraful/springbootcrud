@@ -21,15 +21,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableAutoConfiguration
 public class SecurityConfig {
-//    @Autowired
-//    public UserDetailsServiceImpl userDetailsService;
-
 
     @Bean(name = "userDetailsService")
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
-
+//TODO: Have to implement role base access management. currently all are open due to time constraint.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
