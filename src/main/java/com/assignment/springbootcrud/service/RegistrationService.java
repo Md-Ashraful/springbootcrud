@@ -1,8 +1,8 @@
 package com.assignment.springbootcrud.service;
 
 import com.assignment.springbootcrud.model.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface RegistrationService {
 
@@ -10,5 +10,5 @@ public interface RegistrationService {
     User createUser(User user);
     User updateUser(Long userId, User user);
     void deleteUser(Long userId);
-    List<User> getAllUsers();
+    Page<User> getAllUsers(Pageable pageable);
 }

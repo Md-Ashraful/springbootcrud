@@ -4,10 +4,10 @@ import com.assignment.springbootcrud.model.User;
 import com.assignment.springbootcrud.repo.UserRepository;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -54,8 +54,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
 }
